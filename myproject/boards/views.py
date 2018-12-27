@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from .models import Board
 
 # Create your views here.
-def home(request):
+def home(request, username):
+    print(username)
     boards = Board.objects.all()
     return render(request, 'home.html', {'boards': boards})
 
