@@ -68,7 +68,7 @@ class BoardTopicsTests(TestCase):
         self.assertContains(response, 'href="{0}"'.format(new_topic_url))
 
 class NewTopicTests(TestCase):
-   def setUp(self):
+    def setUp(self):
         Board.objects.create(name='Django', description='Django board.')
         User.objects.create_user(username='john', email='john@doe.com', password='123') 
 
