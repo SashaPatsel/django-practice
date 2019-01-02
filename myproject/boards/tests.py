@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from .views import home, board_topics, new_topic
 from .models import Board, Topic, Post
-
+from .forms import NewTopicForm
 
 # Create your tests here.
 
@@ -85,6 +85,23 @@ class NewTopicTests(TestCase):
     # def test_new_topic_url_resolves_new_topic_view(self):
     #     view = resolve('/boards/1/new/')
     #     self.assertEquals(view.func, new_topic)
+
+    def test_contains_form(self):  # <- new test
+        url = reverse('new_topic', kwargs={'pk': 1})
+        response = self.client.get(url)
+        form = response.context.get('form')
+        self.assertIsInstance(form, NewTopicForm)
+
+    def test_new_topic_invalid_post_data(self):  # <- updated this one
+        '''
+        Invalid post data should not redirect
+        The expected behavior is to show the form again with validation errors
+        '''
+        url = reverse('new_topic', kwargs={'pk': 1})
+        response = self.client.post(url, {})
+        form = response.context.get('form')
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue(form.errors)
 
     def test_new_topic_view_contains_link_back_to_board_topics_view(self):
         new_topic_url = reverse('new_topic', kwargs={'pk': 1})
