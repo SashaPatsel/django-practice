@@ -52,7 +52,8 @@ urlpatterns = [
     path("settings/password/done", auth_views.PasswordChangeDoneView.as_view(template_name='password_change_done.html'),
         name='password_change_done'),
 
-    url(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/$', views.topic_posts, name='topic_posts'),
+    # url(r'^boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/$', views.topic_posts, name='topic_posts'),
+    path("boards/<int:pk>/topics/<int:topic_pk>/", views.topic_posts, name='topic_posts'),
 ]
 
 # Set kwargs using path:
